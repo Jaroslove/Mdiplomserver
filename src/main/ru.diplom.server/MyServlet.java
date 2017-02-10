@@ -12,9 +12,10 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+        String foo = new Connect().getCon();
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<h1>"+"25"+"</h1>");
+        out.println("<h1>"+foo+"</h1>");
         out.flush();
     }
 }
