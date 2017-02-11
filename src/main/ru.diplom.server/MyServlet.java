@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import entities.Event;
 import entities.User;
 
 import javax.servlet.annotation.WebServlet;
@@ -18,9 +19,9 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
-        List<User> users = new UserService().getAllUsersForLastHour();
+        List<Event> events = new UserService().getAllEvent();
         Gson gson = new Gson();
-        String answer = gson.toJson(users);
+        String answer = gson.toJson(events);
         out.println(answer);
         out.flush();
     }

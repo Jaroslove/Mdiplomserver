@@ -2,19 +2,14 @@ package entities;
 
 import java.sql.Timestamp;
 
-public class User {
+/**
+ * Created by 1 on 11.02.2017.
+ */
+public class Event {
     private int id;
     private String name;
-    private Location location;
     private Timestamp date;
-
-    public Timestamp getDate() {
-        return date;
-    }
-
-    public void setDate(Timestamp date) {
-        this.date = date;
-    }
+    private int idUser;
 
     public int getId() {
         return id;
@@ -32,11 +27,19 @@ public class User {
         this.name = name;
     }
 
-    public Location getLocation() {
-        return location;
+    public Timestamp getDate() {
+        return date;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 }

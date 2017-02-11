@@ -14,7 +14,7 @@ public class Connect {
     static final String PASS = "root";
     static final String URL = "jdbc:mysql://localhost:3306/mydbtest";
 
-    public String getCon() {
+    public Connection getCon() {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
 
@@ -27,9 +27,9 @@ public class Connect {
         }
         try {
             connection = DriverManager.getConnection(URL, PASS, PASS);
+            return connection;
         } catch (Exception e) {
-            return e.getMessage();
+            return null;
         }
-        return "yes";
     }
 }
