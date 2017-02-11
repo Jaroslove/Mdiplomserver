@@ -1,35 +1,27 @@
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import entities.Event;
-import entities.Location;
-import entities.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-
-public class UserService {
-
+public class EventService {
 
     Connection connection = new Connect().getCon();
 
-    public List<User> getAllUsersForLastHour() {
+    public List<Event> getAllEvent() {
         Statement statement = null;
         ResultSet resultSet = null;
-        List<User> list = new ArrayList<User>();
+        List<Event> list = new ArrayList<Event>();
         try {
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(Queries.ALL_USERS_ONE_HOUR.getValue());
+            resultSet = statement.executeQuery(Queries.ALL_EVENTS.getValue());
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setName(resultSet.getString("name"));
-                user.setLocation(
-                        new Location(resultSet.getDouble("longitude")
-                                , resultSet.getDouble("latitude")));
-                user.setDate(resultSet.getTimestamp("date"));
-                list.add(user);
+                Event event = new Event();
+                event.setId(resultSet.getInt("id"));
+                event.setName(resultSet.getString("name"));
+                event.setDate(resultSet.getTimestamp("date"));
+                event.setIdUser(resultSet.getInt("idUser"));
+                list.add(event);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,13 +37,13 @@ public class UserService {
         return list;
     }
 
-    public boolean updateUser(String name, double longitude, double latitude) {
+    public boolean insertNewEvent(String name, int idUser) {
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(Queries.UPDATE_USER.getValue());
-            preparedStatement.setDouble(1, longitude);
-            preparedStatement.setDouble(2, latitude);
-            preparedStatement.setString(3, name);
+            preparedStatement = connection.prepareStatement(Queries.INSERT_EVENT.getValue());
+            preparedStatement.setString(1, name);
+            preparedStatement.setTimestamp(2, new Timestamp(new java.util.Date().getTime()));
+            preparedStatement.setInt(3, idUser);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,14 +58,12 @@ public class UserService {
         return true;
     }
 
-    public boolean insertNewUser(String name, Double longitude, Double latitude) {
+    public boolean updateEvent (String oldName, String newName){
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(Queries.INSERT_USER.getValue());
-            preparedStatement.setString(1, name);
-            preparedStatement.setDouble(2, longitude);
-            preparedStatement.setDouble(3, longitude);
-            preparedStatement.setTimestamp(4, new Timestamp(new java.util.Date().getTime()));
+            preparedStatement = connection.prepareStatement(Queries.UPDATE_EVENT.getValue());
+            preparedStatement.setString(2,oldName);
+            preparedStatement.setString(1,newName);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,10 +78,10 @@ public class UserService {
         return true;
     }
 
-    public boolean deleteUser(String name) {
+    public boolean deleteEvent (String name){
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(Queries.DELETE_USER.getValue());
+            preparedStatement = connection.prepareStatement(Queries.DELETE_EVENT.getValue());
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -104,6 +94,5 @@ public class UserService {
                 e.printStackTrace();
             }
         }
-        return true;
-    }
+        return true;   }
 }

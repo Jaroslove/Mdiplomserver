@@ -5,9 +5,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Created by 1 on 08.02.2017.
- */
+
 public class Connect {
     Connection connection = null;
     static final String USER = "root";
