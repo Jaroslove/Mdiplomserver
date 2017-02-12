@@ -58,12 +58,12 @@ public class EventService {
         return true;
     }
 
-    public boolean updateEvent (String oldName, String newName){
+    public boolean updateEvent(String oldName, String newName) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(Queries.UPDATE_EVENT.getValue());
-            preparedStatement.setString(2,oldName);
-            preparedStatement.setString(1,newName);
+            preparedStatement.setString(2, oldName);
+            preparedStatement.setString(1, newName);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class EventService {
         return true;
     }
 
-    public boolean deleteEvent (String name){
+    public boolean deleteEvent(String name) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(Queries.DELETE_EVENT.getValue());
@@ -94,5 +94,16 @@ public class EventService {
                 e.printStackTrace();
             }
         }
-        return true;   }
+        return true;
+    }
+
+    public void shotDown() {
+        try {
+            if (connection.isClosed()) {
+                connection.isClosed();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

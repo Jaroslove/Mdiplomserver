@@ -16,12 +16,14 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+        EventService eventService = new EventService();
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
-        List<Event> events = new EventService().getAllEvent();
+        List<Event> events = eventService.getAllEvent();
         Gson gson = new Gson();
         String answer = gson.toJson(events);
         out.println(answer);
         out.flush();
+        eventService.shotDown();
     }
 }

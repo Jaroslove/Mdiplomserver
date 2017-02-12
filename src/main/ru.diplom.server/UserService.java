@@ -72,7 +72,7 @@ public class UserService {
             preparedStatement = connection.prepareStatement(Queries.INSERT_USER.getValue());
             preparedStatement.setString(1, name);
             preparedStatement.setDouble(2, longitude);
-            preparedStatement.setDouble(3, longitude);
+            preparedStatement.setDouble(3, latitude);
             preparedStatement.setTimestamp(4, new Timestamp(new java.util.Date().getTime()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
