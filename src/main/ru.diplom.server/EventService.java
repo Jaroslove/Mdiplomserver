@@ -100,7 +100,7 @@ public class EventService {
     public void shotDown() {
         try {
             if (connection.isClosed()) {
-                connection.isClosed();
+                connection.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
