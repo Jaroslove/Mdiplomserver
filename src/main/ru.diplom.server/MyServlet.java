@@ -14,6 +14,7 @@ import java.util.List;
 public class MyServlet extends javax.servlet.http.HttpServlet {
 
     EventService eventService = null;
+    UserService userService = null;
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
@@ -24,26 +25,39 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
         if (eventService!=null) {
             eventService.shotDown();
         }
+        if(userService!=null){
+            userService.shotDown();
+        }
     }
 
     @Override
     public void init() throws ServletException {
         eventService = new EventService();
+        userService = new UserService();
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
         String method = String.valueOf(request.getParameter("method"));
-        if(method.equals("getAllEvents")){
-            List<Event> events = eventService.getAllEvent();
-            Gson gson = new Gson();
-            String answer = gson.toJson(events);
-            out.println(answer);
-            out.flush();
-        }else {
-            out.print("NO");
-            out.flush();
+
+        switch (method){
+            case "getAllEvents":{
+                List<Event> events = eventService.getAllEvent();
+                Gson gson = new Gson();
+                String answer = gson.toJson(events);
+                out.println(answer);
+                out.flush();
+            }break;
+            case "getAllUsersForLastHour":{
+                List<User> users = userService.getAllUsersForLastHour();
+                Gson gson =new Gson();
+                String answer = gson.toJson(users);
+                out.print(answer);
+                out.flush();
+            }break;
+            default:
+                out.print("NOTHING TO READ");
         }
     }
 }
