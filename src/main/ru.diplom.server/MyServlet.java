@@ -34,6 +34,17 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
+        String method = String.valueOf(request.getParameter("method"));
+        if(method.equals("getAllEvents")){
+            List<Event> events = eventService.getAllEvent();
+            Gson gson = new Gson();
+            String answer = gson.toJson(events);
+            out.println(answer);
+            out.flush();
+        }else {
+            out.print("NO");
+            out.flush();
+        }
         List<Event> events = eventService.getAllEvent();
         Gson gson = new Gson();
         String answer = gson.toJson(events);
