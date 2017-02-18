@@ -45,10 +45,5 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
             out.print("NO");
             out.flush();
         }
-        List<Event> events = eventService.getAllEvent();
-        Gson gson = new Gson();
-        String answer = gson.toJson(events);
-        out.println(answer);
-        out.flush();
     }
 }
