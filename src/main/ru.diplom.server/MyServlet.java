@@ -56,6 +56,17 @@ public class MyServlet extends javax.servlet.http.HttpServlet {
                 out.print(answer);
                 out.flush();
             }break;
+            case "insertNewUser":{
+                String name = String.valueOf(request.getParameter("name"));
+                Double lo = Double.valueOf(request.getParameter("lo"));
+                Double la = Double.valueOf(request.getParameter("la"));
+                userService.insertNewUser(name,lo,la);
+            }
+            case "insertNewEvent":{
+                String name = String.valueOf(request.getParameter("name"));
+                Integer idUser = Integer.valueOf(request.getParameter("idUser"));
+                eventService.insertNewEvent(name,idUser);
+            }
             default:
                 out.print("NOTHING TO READ");
         }
